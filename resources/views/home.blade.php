@@ -1,7 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
+
     <div class="container">
+
+        @if($errors->any())
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>
+                    {!! implode('<br/>', $errors->all('<span>:message</span>')) !!}
+                </strong>
+            </div>
+        @endif
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -20,7 +32,9 @@
                                 <div class="input-group my-4 col-6 mx-auto">
                                     <input class="form-control"
                                            name="memo"
-                                           placeholder="Type something...">
+                                           placeholder="Type something..."
+                                           value="{{ old('memo') }}"
+                                    >
                                     <span class="input-group-append">
                                 <button class="btn btn-outline-primary rounded-right" type="submit">
                                     <i class="fas fa-save"></i> {{ __('buttons.save') }}

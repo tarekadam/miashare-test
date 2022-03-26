@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
-use Illuminate\Http\RedirectResponse as Response;
+use Illuminate\Contracts\Support\Renderable;
 
 class TaskController extends Controller{
 
@@ -15,11 +15,11 @@ class TaskController extends Controller{
      *
      * @return Response
      */
-    public function store(TaskRequest $request): Response{
+    public function store(TaskRequest $request): Renderable{
         $task = new Task($request->only(['memo']));
         $task->saveOrFail();
 
-        return back();
+        return view('home');
     }
 
 
@@ -30,9 +30,9 @@ class TaskController extends Controller{
      *
      * @return Response
      */
-    public function destroy(Task $task): Response{
+    public function destroy(Task $task): Renderable{
         $task->deleteOrFail();
 
-        return back();
+        return view('home');
     }
 }
