@@ -13,7 +13,7 @@ class TaskController extends Controller{
      *
      * @param TaskRequest $request
      *
-     * @return Response
+     * @return Renderable
      */
     public function store(TaskRequest $request): Renderable{
         $task = new Task($request->only(['memo']));
@@ -23,12 +23,14 @@ class TaskController extends Controller{
     }
 
 
+
+
     /**
      * Remove the specified resource from storage.
      *
      * @param Task $task
      *
-     * @return Response
+     * @return Renderable
      */
     public function destroy(Task $task): Renderable{
         $task->deleteOrFail();
