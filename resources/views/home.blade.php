@@ -51,7 +51,7 @@
                             <div class="list-group">
                                 @foreach($tasks as $task)
                                     <div
-                                        class="list-group-item list-group-item-action flex-column align-items-start @if($task->trashed()) list-group-item-danger @endif">
+                                        class="list-group-item list-group-item-action flex-column align-items-start @if($task->trashed()) list-group-item-danger @endif @if($task->done) list-group-item-success @endif">
                                         <div class="d-flex w-100 justify-content-between">
                                             @if(Auth::user()->is_administrator)
                                                 <h5 class="mb-1">{{ $task->getKey() }} :: {{$task->User->name}}</h5>
@@ -59,10 +59,10 @@
                                             <small>{{ $task->nice_date }}</small>
                                         </div>
                                         <p class="mb-1">{{ $task->memo }}</p>
-                                        @if(!$task->trashed() and !Auth::user()->is_administrator)
-                                            <div style="text-align: right">
-                                                <small>
-                                                    <form action="{{ route('tasks.destroy', $task->getRouteKey()) }}"
+                                        @if(!$task->done and !$task->trashed() and !Auth::user()->is_administrator)
+                                            <div style="text-align: right; ">
+
+                                                    <form style="display: block; float: right; margin-left: 0.5em;" action="{{ route('tasks.destroy', $task->getRouteKey()) }}"
                                                           method="post">
                                                         @csrf
                                                         @method('DELETE')
@@ -72,7 +72,20 @@
                                                             <i class="bi bi-trash-fill" style="color:white"></i>X
                                                         </a>
                                                     </form>
-                                                </small>
+
+                                                    <form style="display: block; float: right;" action="{{ route('tasks.update', $task->getRouteKey()) }}"
+                                                          method="post">
+                                                        @method('PUT')
+                                                        @csrf
+                                                        <a href="#" class="btn btn-success" title="Done"
+                                                           data-toggle="tooltip"
+                                                           onclick="this.closest('form').submit();return false;">
+                                                            <i class="bi bi-trash-fill" style="color:white"></i>&checkmark;
+                                                        </a>
+                                                    </form>
+
+
+
                                             </div>
                                         @endif
                                     </div>

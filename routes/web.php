@@ -24,4 +24,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('/tasks', TaskController::class)
      ->middleware(['auth', 'orm']) // @MiaShare
-     ->only(['store', 'destroy']);
+     ->only(['store', 'update', 'destroy']);

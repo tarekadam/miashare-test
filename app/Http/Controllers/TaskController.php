@@ -16,13 +16,26 @@ class TaskController extends Controller{
      * @return Renderable
      */
     public function store(TaskRequest $request): Renderable{
+
         $task = new Task($request->only(['memo']));
         $task->saveOrFail();
 
         return view('home');
     }
 
+    /**
+     * Mark as complete.
+     * @param Task $task
+     *
+     * @return Renderable
+     */
+    public function update(Task $task) : Renderable{
 
+        $task->done = true;
+        $task->saveOrFail();
+
+        return view('home');
+    }
 
 
     /**
